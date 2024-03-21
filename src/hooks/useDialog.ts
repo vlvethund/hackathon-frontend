@@ -1,10 +1,10 @@
-import { useAlertDialogState, useConfirmDialogState } from '@/store/common/dialog';
+import { useAlertDialogStore, useConfirmDialogStore } from '@/store/common/dialog';
 import { DialogProps } from '@mui/material';
-import { AlertModel, DialogModel } from '@/model/common/dialog';
+import { AlertModel, ConfirmModel } from '@/model/common/dialog';
 
 const useDialog = () => {
-  const { addAlertDialogModel } = useAlertDialogState();
-  const { addDConfirmDialogModel } = useConfirmDialogState();
+  const { addAlertDialogModel } = useAlertDialogStore();
+  const { addDConfirmDialogModel } = useConfirmDialogStore();
 
   const alert = async (content: string, dialogProps?: DialogProps) => {
     const onClickOK = (func: (value: boolean) => void) => {
@@ -23,7 +23,7 @@ const useDialog = () => {
 
     return new Promise((resolve) => {
       addDConfirmDialogModel(
-        DialogModel.new(content, (value: boolean) => onClickConfirm(resolve, value), dialogProps),
+        ConfirmModel.new(content, (value: boolean) => onClickConfirm(resolve, value), dialogProps),
       );
     });
   };

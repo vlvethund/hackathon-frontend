@@ -1,7 +1,7 @@
 import { atom, useRecoilState } from 'recoil';
-import { DialogModel, AlertModel } from '@/model/common/dialog';
+import { ConfirmModel, AlertModel } from '@/model/common/dialog';
 
-const confirmDialogState = atom<DialogModel[]>({
+const confirmDialogState = atom<ConfirmModel[]>({
   key: 'confirm-dialog-state',
   default: [],
 });
@@ -11,10 +11,10 @@ const alertDialogState = atom<AlertModel[]>({
   default: [],
 });
 
-const useConfirmDialogState = () => {
+const useConfirmDialogStore = () => {
   const [confirmDialogModels, setConfirmDialogModels] = useRecoilState(confirmDialogState);
 
-  const addDConfirmDialogModel = (dialogModel: DialogModel) => {
+  const addDConfirmDialogModel = (dialogModel: ConfirmModel) => {
     setConfirmDialogModels((curr) => [...curr, dialogModel]);
   };
 
@@ -29,7 +29,7 @@ const useConfirmDialogState = () => {
   };
 };
 
-const useAlertDialogState = () => {
+const useAlertDialogStore = () => {
   const [alertDialogModels, setAlertDialogModels] = useRecoilState(alertDialogState);
 
   const addAlertDialogModel = (dialogModel: AlertModel) => {
@@ -47,4 +47,4 @@ const useAlertDialogState = () => {
   };
 };
 
-export { useConfirmDialogState, useAlertDialogState };
+export { useConfirmDialogStore, useAlertDialogStore };

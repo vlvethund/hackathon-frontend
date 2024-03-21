@@ -1,11 +1,11 @@
 import React from 'react';
-import { useAlertDialogState, useConfirmDialogState } from '@/store/common/dialog';
+import { useAlertDialogStore, useConfirmDialogStore } from '@/store/common/dialog';
 import Alert from './Alert';
 import Confirm from './Confirm';
 
 const DialogProvider: React.FC = () => {
-  const { alertDialogModels, removeAlertDialogModel } = useAlertDialogState();
-  const { confirmDialogModels, removeDialogModel } = useConfirmDialogState();
+  const { alertDialogModels, removeAlertDialogModel } = useAlertDialogStore();
+  const { confirmDialogModels, removeDialogModel } = useConfirmDialogStore();
 
   return (
     <>

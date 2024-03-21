@@ -1,6 +1,6 @@
 import { DialogProps } from '@mui/material';
 
-class DialogModel {
+class ConfirmModel {
   id: string;
   content: string;
   confirm: (value: boolean) => void;
@@ -22,8 +22,8 @@ class DialogModel {
     confirm: (value: boolean) => void,
     dialogProps: DialogProps = {} as DialogProps,
   ) {
-    return new DialogModel(content, confirm, dialogProps);
+    return new ConfirmModel(content, confirm, dialogProps);
   }
 }
 
-export default DialogModel;
+export default ConfirmModel;
