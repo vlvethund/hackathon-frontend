@@ -14,15 +14,12 @@
   },
   "license": "MIT",
   "scripts": {
-
     "local": "vite",
     "dev": "vite --mode dev",
     "prod": "vite --mode prod",
-
     "build-local": "tsc && vite build",
     "build-dev": "tsc && vite build --mode dev",
     "build-prod": "tsc && vite build --mode prod",
-
     "preview": "vite preview",
     "https-preview": "serve dist",
     "prepare": "husky install && cp -n env/.shared .env &",
