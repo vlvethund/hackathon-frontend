@@ -30,4 +30,20 @@ export default defineConfig({
   test: {
     root: path.resolve(__dirname, './src'),
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    },
+    // proxy: {
+    //   '/api': {
+    //     target: 'https://test.com:9999',
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, '')
+    //   }
+    // }
+  }
 });
