@@ -2,11 +2,9 @@ import isMobile from '@/utils/is-mobile';
 
 import type { Notifications } from './types';
 
-const title = 'React PWA';
+const title = 'React TEST';
 
 const email = 'auther-email@gmail.com';
-
-const repository = 'https://github.com/suren-atoyan/react-pwa';
 
 const messages = {
   app: {
@@ -52,14 +50,4 @@ const defaultMetaTags = {
 };
 const giphy404 = 'https://giphy.com/embed/xTiN0L7EW5trfOvEk0';
 
-export {
-  loader,
-  notifications,
-  dateFormat,
-  messages,
-  repository,
-  email,
-  title,
-  defaultMetaTags,
-  giphy404,
-};
+export { loader, notifications, dateFormat, messages, email, title, defaultMetaTags, giphy404 };
