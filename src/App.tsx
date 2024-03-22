@@ -6,11 +6,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { withErrorHandler } from '@/error-handling';
 import AppErrorBoundaryFallback from '@/error-handling/fallbacks/App';
 import Pages from '@/routes/Pages';
-import Header from '@/sections/Header';
 import Notifications from '@/sections/Notifications';
 import SW from '@/sections/SW';
-import Sidebar from '@/sections/Sidebar';
 import { DialogsProvider } from '@/components/common';
+
+import '../index.css';
 
 function App() {
   return (
@@ -20,8 +20,6 @@ function App() {
       <DialogsProvider />
       <SW />
       <BrowserRouter>
-        <Header />
-        <Sidebar />
         <Pages />
       </BrowserRouter>
     </Fragment>

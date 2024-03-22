@@ -11,7 +11,7 @@ import { Pages, Routes } from './types';
 const routes: Routes = {
   [Pages.Welcome]: {
     component: asyncComponentLoader(() => import('@/pages/Welcome')),
-    path: '/',
+    path: '/welcome',
     title: 'Welcome',
     icon: HomeIcon,
   },
@@ -37,6 +37,12 @@ const routes: Routes = {
     component: asyncComponentLoader(() => import('@/pages/Page4')),
     path: '/page-4',
     title: 'Page 4',
+    icon: BugReportIcon,
+  },
+  [Pages.SignIn]: {
+    component: asyncComponentLoader(() => import('@/pages/SignIn/SignIn')),
+    path: '/sign-in',
+    title: 'Sign In',
     icon: BugReportIcon,
   },
   [Pages.NotFound]: {

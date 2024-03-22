@@ -1,28 +1,22 @@
-import ThemeIcon from '@mui/icons-material/InvertColors';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
 
 import { FlexBox } from '@/components/styled';
 import { title } from '@/config';
-import useHotKeysDialog from '@/store/hotkeys';
 import useNotifications from '@/store/notifications';
 import useSidebar from '@/store/sidebar';
 import useTheme from '@/store/theme';
 
-import { HotKeysButton } from './styled';
 import { getRandomJoke } from './utils';
 
 function Header() {
   const [, sidebarActions] = useSidebar();
-  const [theme, themeActions] = useTheme();
+  const [theme] = useTheme();
   const [, notificationsActions] = useNotifications();
-  const [, hotKeysDialogActions] = useHotKeysDialog();
 
   function showNotification() {
     notificationsActions.push({
@@ -40,8 +34,8 @@ function Header() {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }} data-pw={`theme-${theme}`}>
-      <AppBar color="transparent" elevation={1} position="static">
+    <Box sx={{ flexGrow: 1 }} data-pw={`theme-${theme}`} className="bg-white">
+      <AppBar color="transparent" elevation={0} position="static">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <FlexBox sx={{ alignItems: 'center' }}>
             <IconButton
@@ -57,32 +51,6 @@ function Header() {
             <Button onClick={showNotification} color="info">
               {title}
             </Button>
-          </FlexBox>
-          <FlexBox>
-            <FlexBox>
-              <Tooltip title="Hot keys" arrow>
-                <HotKeysButton
-                  size="small"
-                  variant="outlined"
-                  aria-label="open hotkeys dialog"
-                  onClick={hotKeysDialogActions.open}
-                >
-                  alt + k
-                </HotKeysButton>
-              </Tooltip>
-            </FlexBox>
-            <Divider orientation="vertical" flexItem />
-            <Tooltip title="Switch theme" arrow>
-              <IconButton
-                color="info"
-                edge="end"
-                size="large"
-                onClick={themeActions.toggle}
-                data-pw="theme-toggle"
-              >
-                <ThemeIcon />
-              </IconButton>
-            </Tooltip>
           </FlexBox>
         </Toolbar>
       </AppBar>
