@@ -20,5 +20,7 @@ steps:
   inputs:
     app_location: '/'
     output_location: 'dist'
+    skip_api_build: true
+    is_static_export: true
     azure_static_web_apps_api_token: $(STATIC_DEPLOY_TOKEN)
   displayName: Deploy to Azure Static Web App
