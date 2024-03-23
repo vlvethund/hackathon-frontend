@@ -29,6 +29,7 @@ const ChatContainer: React.FC = () => {
       .finally(() => {
         setInputText('');
       });
+
     await alert(`상담사 ${result.data.consultationName} 님이 배정되었습니다.`);
   };
 
