@@ -1,1 +1,3 @@
-export { default as Login } from './Login';
+import Login from '@/pages/Login/Login';
+
+export default Login;

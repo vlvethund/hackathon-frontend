@@ -39,9 +39,15 @@ const routes: Routes = {
     title: 'Page 4',
     icon: BugReportIcon,
   },
-  [Pages.SignIn]: {
+  [Pages.Login]: {
+    component: asyncComponentLoader(() => import('@/pages/Login/Login')),
+    path: '/',
+    title: 'Login',
+    icon: BugReportIcon,
+  },
+  [Pages.SignUp]: {
     component: asyncComponentLoader(() => import('@/pages/SignUp/SignUp')),
-    path: '/sign-up',
+    path: '/signup',
     title: 'Sign Up',
     icon: BugReportIcon,
   },

@@ -75,8 +75,6 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    console.log(`field changed: ${JSON.stringify(field)}`);
-
     if (
       field.name.trim().length > 0 &&
       field.email.trim().length > 0 &&
@@ -189,7 +187,7 @@ const SignUp = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/page-3" variant="body2">
+              <Link href="/" variant="body2">
                 계정이 있으신가요? 로그인하기
               </Link>
             </Grid>

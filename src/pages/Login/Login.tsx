@@ -1,113 +1,129 @@
 import * as React from 'react';
-import { Box, Typography, TextField, Button } from '@mui/material';
+import { useEffect, useState } from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { axiosApi } from '@/utils/axios';
 import { useNavigate } from 'react-router-dom';
-import { title } from '@/config';
-import image from '../../../public/pwa-192x192.png';
-import { ChangeEvent, useState } from 'react';
 
-interface InputFieldProps {
-  label: string;
-  value: string;
-  helperText: string;
-  className?: string;
-  onChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-}
-
-const InputField: React.FC<InputFieldProps> = ({
-  label,
-  value,
-  helperText,
-  className,
-  onChange,
-}) => {
-  return (
-    <Box className={className}>
-      <TextField
-        label={label}
-        value={value}
-        variant="outlined"
-        fullWidth
-        size="small"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={onChange}
-      />
-      <Typography variant="caption" color="textSecondary">
-        {helperText}
-      </Typography>
-    </Box>
-  );
+type LoginField = {
+  email: string;
+  password: string;
 };
 
-const LoginForm: React.FC = () => {
+const Login = () => {
+  const [field, setField] = useState<LoginField>({
+    email: '',
+    password: '',
+  });
+  const [loginButtonDisabled, setLoginButtonDisabled] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const [id, setId] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const updated = { ...field };
+    updated.email = event.currentTarget.value;
+    setField(updated);
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const updated = { ...field };
+    updated.password = event.currentTarget.value;
+    setField(updated);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+    const response = await axiosApi.post(
+      // TODO: Enter Login API URL here
+      '',
+      field,
+    );
+
+    if (response.status === 204) {
+      console.log('Login Request Success');
+      navigate('/welcome');
+    }
+  };
+
+  useEffect(() => {
+    if (field.email.trim().length > 0 && field.password.trim().length > 0) {
+      setLoginButtonDisabled(false);
+    } else {
+      setLoginButtonDisabled(true);
+    }
+  }, [field]);
 
   return (
-    <Box component="form" mt={3}>
-      <InputField
-        label="Id"
-        value={id}
-        onChange={(e) => {
-          setId(e.target.value);
-        }}
-        helperText="Helper text"
-      />
-      <InputField
-        label="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        helperText="Helper text"
-        className="mt-3"
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        size="large"
-        className="mt-8"
-        sx={{
-          background: 'linear-gradient(90deg, #0090DA 30%, #A4CE4E 80%)',
-        }}
-        onClick={() => navigate('/welcome')}
-      >
-        Log In
-      </Button>
-    </Box>
-  );
-};
-
-const Login: React.FC = () => {
-  return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      px={4}
-      py={10}
-      bgcolor="background.paper"
-    >
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
       <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        mt={14}
-        maxWidth="347px"
-        width="100%"
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
       >
-        <Box display="flex" flexDirection="column" textAlign="center" mb={5}>
-          <Box component="img" src={image} alt="Logo" alignSelf="center" width={48} height={48} />
-          <Typography variant="h4" fontWeight="bold" mt={4}>
-            {title}
-          </Typography>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          로그인
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="이메일 주소"
+            name="email"
+            onChange={handleEmailChange}
+            autoComplete="email"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="비밀번호"
+            type="password"
+            id="password"
+            onChange={handlePasswordChange}
+            autoComplete="current-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={loginButtonDisabled}
+            sx={{ mt: 3, mb: 2 }}
+          >
+            로그인
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link href="#" variant="body2">
+                계정이 없으신가요? 회원가입하기
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
-        <LoginForm />
       </Box>
-    </Box>
+    </Container>
   );
 };
 
