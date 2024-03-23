@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,7 +10,8 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useEffect, useState } from 'react';
+import { axiosApi } from '@/utils/axios';
+import { useNavigate } from 'react-router-dom';
 
 type LoginField = {
   email: string;
@@ -22,6 +24,7 @@ const Login = () => {
     password: '',
   });
   const [loginButtonDisabled, setLoginButtonDisabled] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updated = { ...field };
@@ -35,13 +38,23 @@ const Login = () => {
     setField(updated);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+    const response = await axiosApi.post(
+      // TODO: Enter Login API URL here
+      '',
+      field,
+    );
+
+    if (response.status === 204) {
+      console.log('Login Request Success');
+      navigate('/welcome');
+    }
   };
 
   useEffect(() => {
