@@ -4,8 +4,6 @@ import axios, {
   AxiosResponse,
   CreateAxiosDefaults,
 } from 'axios';
-import { MetlifeResBody } from '@/model/common/response/MetlifeResBody';
-
 type RequestType = 'POST' | 'GET' | 'DELETE' | 'PUT';
 
 export const createInstance = (axiosConfig?: CreateAxiosDefaults) =>
@@ -40,30 +38,22 @@ class AxiosApi {
     this.instance = createInstance(config);
   }
 
-  async get<T>(url: string, config?: AxiosRequestConfig<T>): Promise<MetlifeResBody<T>> {
+  async get<T>(url: string, config?: AxiosRequestConfig<T>): Promise<T> {
     const result = await this.request<T>('GET', url, undefined, config);
     return result.data;
   }
 
-  async post<T, R = T>(
-    uri: string,
-    data?: T,
-    config?: AxiosRequestConfig<T>,
-  ): Promise<MetlifeResBody<R>> {
+  async post<T, R = T>(uri: string, data?: T, config?: AxiosRequestConfig<T>): Promise<R> {
     const result = await this.request<T, R>('POST', uri, data ?? ({} as T), config);
     return result.data;
   }
 
-  async put<T, R = T>(
-    uri: string,
-    data?: T,
-    config?: AxiosRequestConfig,
-  ): Promise<MetlifeResBody<R>> {
+  async put<T, R = T>(uri: string, data?: T, config?: AxiosRequestConfig): Promise<R> {
     const result = await this.request<T, R>('PUT', uri, data ?? ({} as T), config);
     return result.data;
   }
 
-  async delete<T>(url: string, config?: AxiosRequestConfig<T>): Promise<MetlifeResBody<T>> {
+  async delete<T>(url: string, config?: AxiosRequestConfig<T>): Promise<T> {
     const result = await this.request<T>('DELETE', url, undefined, config);
     return result.data;
   }
@@ -74,7 +64,7 @@ class AxiosApi {
     data?: T,
     config?: AxiosRequestConfig,
   ) {
-    return this.instance.request<T, AxiosResponse<MetlifeResBody<R>>>({
+    return this.instance.request<T, AxiosResponse<R>>({
       method: requestType,
       url,
       data,
