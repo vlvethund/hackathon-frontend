@@ -18,6 +18,7 @@ import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import useNotifications from '@/store/notifications';
 
 type SignUpField = {
   name: string;
@@ -39,6 +40,7 @@ const SignUp = () => {
   });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState<boolean>(true);
   const navigate = useNavigate();
+  const [, notificationsActions] = useNotifications();
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updated = { ...field };
@@ -96,14 +98,24 @@ const SignUp = () => {
       joinedInsurance: field.joinedInsurance,
     };
 
-    const response = await axiosApi.post(
-      'https://app-metlife-team10.azurewebsites.net/members',
-      body,
-    );
+    try {
+      const response = await axiosApi.post(
+        'https://app-metlife-team10.azurewebsites.net/members',
+        body,
+      );
 
-    if (response.status === 201) {
-      console.log('Signup Request Success');
-      navigate('/welcome');
+      if (response.status === 201) {
+        console.log('Signup Request Success');
+        navigate('/welcome');
+      }
+    } catch (e) {
+      notificationsActions.push({
+        options: {
+          autoHideDuration: 4500,
+          variant: 'error',
+        },
+        message: '회원가입 오류! 다시 확인해 주세요.',
+      });
     }
   };
 
