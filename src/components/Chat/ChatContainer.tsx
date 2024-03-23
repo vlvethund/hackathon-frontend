@@ -16,13 +16,21 @@ const ChatContainer: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
 
   const handleRequestConsultation = async () => {
-    const result = await axiosApi.post<
-      { history: string; question: string },
-      { consultationName: string }
-    >('', {
-      history: '',
-      question: '',
-    });
+    const history = chatLogModels.reduce((prev, curr) => {
+      return prev + `;${curr.speakerType}:${curr.text}`;
+    }, '');
+
+    const result = await axiosApi
+      .post<{ history: string; question: string }, { consultationName: string }>(
+        '/api/consultings',
+        {
+          history,
+          question: inputText,
+        },
+      )
+      .finally(() => {
+        setInputText('');
+      });
     await alert(`상담사 ${result.data.consultationName} 님이 배정되었습니다.`);
   };
 
