@@ -2,7 +2,7 @@ import isMobile from '@/utils/is-mobile';
 
 import type { Notifications } from './types';
 
-const title = 'React TEST';
+const title = 'Metis';
 
 const email = 'auther-email@gmail.com';
 
