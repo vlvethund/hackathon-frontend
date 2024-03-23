@@ -28,7 +28,7 @@ export default function MemberDataTable() {
   useEffect(() => {
     axiosApi
       // TODO: Change API url
-      .get<ApiResponse>('/consultings')
+      .get<ApiResponse>('/consultings/1')
       .then((response) => {
         if (response.status === 200) {
           return response.data as ApiResponse;
