@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { axiosApi } from '@/utils/axios';
 import { useNavigate } from 'react-router-dom';
+import useNotifications from '@/store/notifications';
 
 type LoginField = {
   email: string;
@@ -25,6 +26,7 @@ const Login = () => {
   });
   const [loginButtonDisabled, setLoginButtonDisabled] = useState<boolean>(true);
   const navigate = useNavigate();
+  const [, notificationsActions] = useNotifications();
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updated = { ...field };
@@ -45,14 +47,25 @@ const Login = () => {
       email: data.get('email'),
       password: data.get('password'),
     });
-    const response = await axiosApi.post(
-      'https://app-metlife-team10.azurewebsites.net/members/login',
-      field,
-    );
 
-    if (response.status === 204) {
-      console.log('Login Request Success');
-      navigate('/welcome');
+    try {
+      const response = await axiosApi.post(
+        'https://app-metlife-team10.azurewebsites.net/members/login',
+        field,
+      );
+
+      if (response.status === 204) {
+        console.log('Login Request Success');
+        navigate('/welcome');
+      }
+    } catch (e) {
+      notificationsActions.push({
+        options: {
+          autoHideDuration: 4500,
+          variant: 'error',
+        },
+        message: '로그인 오류! 다시 확인해 주세요.',
+      });
     }
   };
 
