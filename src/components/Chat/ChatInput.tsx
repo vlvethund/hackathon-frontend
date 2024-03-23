@@ -41,7 +41,7 @@ const ChatInput: React.FC<Props> = ({ inputText, setInputText }) => {
     }, '');
 
     const result = await axiosApi.post<{ history: string; question: string }, { answer: string }>(
-      '/api/chatbot',
+      '/chatbot',
       { history, question: inputText },
     );
     addAIChat(result.data.answer);
