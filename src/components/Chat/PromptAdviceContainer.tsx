@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-const PromptAdviceContainer: React.FC = () => {
-  return <></>;
+interface ContainerProps {
+  children: ReactNode;
+}
+
+const PromptAdviceContainer = ({ children }: ContainerProps) => {
+  return <>{children}</>;
 };
 
 export default PromptAdviceContainer;
