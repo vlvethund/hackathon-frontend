@@ -40,9 +40,9 @@ const routes: Routes = {
     icon: BugReportIcon,
   },
   [Pages.SignIn]: {
-    component: asyncComponentLoader(() => import('@/pages/SignIn/SignIn')),
-    path: '/sign-in',
-    title: 'Sign In',
+    component: asyncComponentLoader(() => import('@/pages/SignUp/SignUp')),
+    path: '/sign-up',
+    title: 'Sign Up',
     icon: BugReportIcon,
   },
   [Pages.NotFound]: {
