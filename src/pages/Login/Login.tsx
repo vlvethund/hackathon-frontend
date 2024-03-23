@@ -92,7 +92,7 @@ const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          로그인
+          Log In
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -121,6 +121,8 @@ const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
+            color="primary"
+            size="large"
             disabled={loginButtonDisabled}
             sx={{
               mt: 3,
@@ -135,10 +137,17 @@ const Login = () => {
             로그인
           </Button>
           <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                계정이 없으신가요? 회원가입하기
-              </Link>
+            <Grid item container justifyContent="space-between">
+              <Grid item>
+                <Link href="/customers" variant="body2">
+                  (상담사 화면 보기)
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  계정이 없으신가요? 회원가입하기
+                </Link>
+              </Grid>
             </Grid>
           </Grid>
         </Box>

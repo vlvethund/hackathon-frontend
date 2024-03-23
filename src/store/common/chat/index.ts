@@ -16,7 +16,8 @@ const useChatLogStore = () => {
 
   const addAIChat = (text: string) => {
     const chat = ChatLog.new(text, Speaker.Ai);
-    setChatLogModels([...chatLogModels, chat]);
+    console.log([...chatLogModels, chat]);
+    setChatLogModels((prev) => [...prev, chat]);
   };
 
   return {

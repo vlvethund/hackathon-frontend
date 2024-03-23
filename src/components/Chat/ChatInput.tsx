@@ -30,9 +30,8 @@ const ChatInput: React.FC<Props> = ({ inputText, setInputText }) => {
 
   const handleClickSend = async () => {
     addUserChat(inputText);
-    await requestChatBot().finally(() => {
-      setInputText('');
-    });
+    setInputText('');
+    await requestChatBot().finally(() => {});
   };
 
   const requestChatBot = async () => {

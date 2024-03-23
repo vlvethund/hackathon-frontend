@@ -9,6 +9,7 @@ import useChatLogStore from '@/store/common/chat';
 import { axiosApi } from '@/utils/axios';
 import useDialog from '@/hooks/useDialog';
 import { Virtuoso } from 'react-virtuoso';
+import { Speaker } from '@/model/common/chat';
 
 const ChatContainer: React.FC = () => {
   const { chatLogModels } = useChatLogStore();
@@ -16,13 +17,19 @@ const ChatContainer: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
 
   const handleRequestConsultation = async () => {
-    const result = await axiosApi.post<
-      { history: string; question: string },
-      { consultationName: string }
-    >('', {
-      history: '',
-      question: '',
-    });
+    const history = chatLogModels.reduce((prev, curr) => {
+      return prev + `;${curr.speakerType === Speaker.Ai ? '상담사' : '고객'}:${curr.text}`;
+    }, '');
+
+    const result = await axiosApi
+      .post<{ history: string; question: string }, { consultationName: string }>('/consultings', {
+        history,
+        question: inputText,
+      })
+      .finally(() => {
+        setInputText('');
+      });
+
     await alert(`상담사 ${result.data.consultationName} 님이 배정되었습니다.`);
   };
 
