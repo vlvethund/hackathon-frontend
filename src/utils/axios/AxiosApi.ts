@@ -64,7 +64,7 @@ class AxiosApi {
   }
 
   async delete<T>(url: string, config?: AxiosRequestConfig<T>): Promise<MetlifeResBody<T>> {
-    const result = await this.request<T>('GET', url, undefined, config);
+    const result = await this.request<T>('DELETE', url, undefined, config);
     return result.data;
   }
 
