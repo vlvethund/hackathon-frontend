@@ -1,4 +1,4 @@
 export enum Speaker {
-  Ai,
-  Customer,
+  Ai = '상담사',
+  Customer = '고객',
 }

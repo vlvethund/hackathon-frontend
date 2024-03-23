@@ -9,7 +9,7 @@ type RequestType = 'POST' | 'GET' | 'DELETE' | 'PUT';
 
 const createInstance = (axiosConfig?: CreateAxiosDefaults) =>
   axios.create({
-    // baseURL: import.meta.env.VITE_APP_BASEURL,
+    baseURL: 'https://app-metlife-team10.azurewebsites.net',
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
