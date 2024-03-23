@@ -21,13 +21,10 @@ const ChatContainer: React.FC = () => {
     }, '');
 
     const result = await axiosApi
-      .post<{ history: string; question: string }, { consultationName: string }>(
-        '/api/consultings',
-        {
-          history,
-          question: inputText,
-        },
-      )
+      .post<{ history: string; question: string }, { consultationName: string }>('/consultings', {
+        history,
+        question: inputText,
+      })
       .finally(() => {
         setInputText('');
       });
