@@ -9,6 +9,7 @@ import useChatLogStore from '@/store/common/chat';
 import { axiosApi } from '@/utils/axios';
 import useDialog from '@/hooks/useDialog';
 import { Virtuoso } from 'react-virtuoso';
+import { Speaker } from '@/model/common/chat';
 
 const ChatContainer: React.FC = () => {
   const { chatLogModels } = useChatLogStore();
@@ -17,7 +18,7 @@ const ChatContainer: React.FC = () => {
 
   const handleRequestConsultation = async () => {
     const history = chatLogModels.reduce((prev, curr) => {
-      return prev + `;${curr.speakerType}:${curr.text}`;
+      return prev + `;${curr.speakerType === Speaker.Ai ? '상담사' : '고객'}:${curr.text}`;
     }, '');
 
     const result = await axiosApi
