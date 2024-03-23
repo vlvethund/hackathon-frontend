@@ -116,13 +116,17 @@ const Login = () => {
             로그인
           </Button>
           <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                계정이 없으신가요? 회원가입하기
-              </Link>
-              <Link href="/signup" variant="body2">
-                계정이 없으신가요? 회원가입하기
-              </Link>
+            <Grid item container justifyContent="space-between">
+              <Grid ite>
+                <Link href="/customers" variant="body2">
+                  (상담사 화면 보기)
+                </Link>
+              </Grid>
+              <Grid ite>
+                <Link href="/signup" variant="body2">
+                  계정이 없으신가요? 회원가입하기
+                </Link>
+              </Grid>
             </Grid>
           </Grid>
         </Box>
