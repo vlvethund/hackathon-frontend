@@ -75,8 +75,6 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    console.log(`field changed: ${JSON.stringify(field)}`);
-
     if (
       field.name.trim().length > 0 &&
       field.email.trim().length > 0 &&
