@@ -79,7 +79,7 @@ const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          로그인
+          Log In
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -108,13 +108,18 @@ const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
+            color="primary"
+            size="large"
             disabled={loginButtonDisabled}
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, background: 'linear-gradient(90deg, #0090DA 30%, #A4CE4E 80%)' }}
           >
             로그인
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
+              <Link href="/signup" variant="body2">
+                계정이 없으신가요? 회원가입하기
+              </Link>
               <Link href="/signup" variant="body2">
                 계정이 없으신가요? 회원가입하기
               </Link>

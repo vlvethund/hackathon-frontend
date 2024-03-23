@@ -31,19 +31,19 @@ export default defineConfig({
     root: path.resolve(__dirname, './src'),
   },
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    },
     // proxy: {
     //   '/api': {
-    //     target: 'https://test.com:9999',
+    //     target: 'http://localhost:3000',
     //     changeOrigin: true,
     //     rewrite: (path) => path.replace(/^\/api/, '')
     //   }
-    // }
+    // },
+    proxy: {
+      '/api': {
+        target: 'https://app-metlife-team10.azurewebsites.net',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 });
