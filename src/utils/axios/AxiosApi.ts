@@ -6,7 +6,7 @@ import axios, {
 } from 'axios';
 type RequestType = 'POST' | 'GET' | 'DELETE' | 'PUT';
 
-export const createInstance = (axiosConfig?: CreateAxiosDefaults) =>
+const createInstance = (axiosConfig?: CreateAxiosDefaults) =>
   axios.create({
     // baseURL: import.meta.env.VITE_APP_BASEURL,
     headers: {
@@ -32,39 +32,55 @@ function parseJson(res: string): JSON | string {
 }
 
 class AxiosApi {
-  instance: AxiosInstance;
+  private _config: CreateAxiosDefaults | undefined;
+  private static instance: AxiosInstance;
 
-  constructor(config?: CreateAxiosDefaults) {
-    this.instance = createInstance(config);
+  private constructor(config?: CreateAxiosDefaults) {
+    this._config = config;
   }
 
-  async get<T>(url: string, config?: AxiosRequestConfig<T>): Promise<T> {
-    const result = await this.request<T>('GET', url, undefined, config);
+  private static getInstance(config?: CreateAxiosDefaults) {
+    if (!AxiosApi.instance) {
+      this.instance = createInstance(config);
+    }
+    return this.instance;
+  }
+
+  public static async get<T>(url: string, config?: AxiosRequestConfig<T>): Promise<T> {
+    const result = await AxiosApi.request<T>('GET', url, undefined, config);
     return result.data;
   }
 
-  async post<T, R = T>(uri: string, data?: T, config?: AxiosRequestConfig<T>): Promise<R> {
-    const result = await this.request<T, R>('POST', uri, data ?? ({} as T), config);
+  public static async post<T, R = T>(
+    uri: string,
+    data?: T,
+    config?: AxiosRequestConfig<T>,
+  ): Promise<R> {
+    const result = await AxiosApi.request<T, R>('POST', uri, data ?? ({} as T), config);
     return result.data;
   }
 
-  async put<T, R = T>(uri: string, data?: T, config?: AxiosRequestConfig): Promise<R> {
-    const result = await this.request<T, R>('PUT', uri, data ?? ({} as T), config);
+  public static async put<T, R = T>(
+    uri: string,
+    data?: T,
+    config?: AxiosRequestConfig,
+  ): Promise<R> {
+    const result = await AxiosApi.request<T, R>('PUT', uri, data ?? ({} as T), config);
     return result.data;
   }
 
-  async delete<T>(url: string, config?: AxiosRequestConfig<T>): Promise<T> {
-    const result = await this.request<T>('DELETE', url, undefined, config);
+  public static async delete<T>(url: string, config?: AxiosRequestConfig<T>): Promise<T> {
+    const result = await AxiosApi.request<T>('DELETE', url, undefined, config);
     return result.data;
   }
 
-  private async request<T, R = T>(
+  private static async request<T, R = T>(
     requestType: RequestType,
     url: string,
     data?: T,
     config?: AxiosRequestConfig,
   ) {
-    return this.instance.request<T, AxiosResponse<R>>({
+    return AxiosApi.getInstance().request<T, AxiosResponse<R>>({
       method: requestType,
       url,
       data,
@@ -73,6 +89,6 @@ class AxiosApi {
   }
 }
 
-const axiosApi = new AxiosApi();
+const axiosApi = AxiosApi;
 
 export default axiosApi;
