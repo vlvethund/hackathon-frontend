@@ -22,7 +22,7 @@ const ChatContainer: React.FC = () => {
     }, '');
 
     const result = await axiosApi
-      .post<{ history: string; question: string }, { consultationName: string }>('/consultings', {
+      .post<{ history: string; question: string }, { consultantName: string }>('/consultings', {
         history,
         question: inputText,
       })
@@ -30,7 +30,7 @@ const ChatContainer: React.FC = () => {
         setInputText('');
       });
 
-    await alert(`상담사 ${result.data.consultationName} 님이 배정되었습니다.`);
+    await alert(`상담사 ${result.data.consultantName} 님이 배정되었습니다.`);
   };
 
   const noModels = useMemo(() => chatLogModels.length === 0, [chatLogModels]);
