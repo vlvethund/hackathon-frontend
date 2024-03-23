@@ -12,11 +12,18 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { axiosApi } from '@/utils/axios';
+import * as dayjs from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 type SignUpField = {
   name: string;
   email: string;
   password: string;
+  birthDate: dayjs.Dayjs | null | undefined;
   joinedInsurance: string;
   agreed: boolean;
 };
@@ -25,11 +32,13 @@ const SignUp = () => {
   const [field, setField] = useState<SignUpField>({
     email: '',
     joinedInsurance: 'insurance-none',
+    birthDate: dayjs(),
     name: '',
     password: '',
     agreed: false,
   });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updated = { ...field };
@@ -55,13 +64,19 @@ const SignUp = () => {
     setField(updated);
   };
 
+  const handleBirthDateChange = (value: dayjs.Dayjs | null | undefined) => {
+    const updated = { ...field };
+    updated.birthDate = value;
+    setField(updated);
+  };
+
   const handleAgreement = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updated = { ...field };
     updated.agreed = event.target.checked;
     setField(updated);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -72,13 +87,35 @@ const SignUp = () => {
       password: data.get('password'),
       joinedInsurance: data.get('joined-insurance'),
     });
+
+    const body = {
+      name: field.name,
+      email: field.email,
+      birthDate: field.birthDate!.format('YYYY-MM-DD'), // 1990-01-23
+      password: field.password,
+      joinedInsurance: field.joinedInsurance,
+    };
+
+    const response = await axiosApi.post(
+      'https://app-metlife-team10.azurewebsites.net/members',
+      body,
+    );
+
+    if (response.status === 201) {
+      console.log('Signup Request Success');
+      navigate('/welcome');
+    }
   };
 
   useEffect(() => {
+    console.log(`date: ${field.birthDate?.format('YYYY-MM-DD')}`);
+
     if (
       field.name.trim().length > 0 &&
       field.email.trim().length > 0 &&
       field.password.trim().length > 0 &&
+      field.birthDate !== null &&
+      field.birthDate !== undefined &&
       field.agreed
     ) {
       setSubmitButtonDisabled(false);
@@ -128,6 +165,17 @@ const SignUp = () => {
                 name="email"
                 autoComplete="email"
               />
+            </Grid>
+            <Grid item xs={12}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  sx={{ width: 1 }}
+                  label="생년월일"
+                  value={field.birthDate}
+                  onChange={(value) => handleBirthDateChange(value)}
+                  name="birthdate"
+                />
+              </LocalizationProvider>
             </Grid>
             <Grid item xs={12}>
               <TextField
