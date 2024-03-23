@@ -27,10 +27,18 @@ export default function MemberDataTable() {
 
   useEffect(() => {
     axiosApi
-      .get<ApiResponse>('/consultings')
+      // TODO: Change API url
+      .get<ApiResponse>('/consultings/1')
       .then((response) => {
-        if (response && response.memberInfo) {
-          setMemberData(response.memberInfo);
+        if (response.status === 200) {
+          return response.data as ApiResponse;
+        } else {
+          throw Error();
+        }
+      })
+      .then((res) => {
+        if (res.memberInfo) {
+          setMemberData(res.memberInfo);
         } else {
           console.error('Invalid response structure');
           setMemberData([]);
