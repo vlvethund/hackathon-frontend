@@ -1,50 +1,51 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import axiosApi from '@/utils/axios/AxiosApi';
 
-// 사용자 데이터 타입
-interface User {
-  id: number;
+interface MemberInfo {
+  memberId: number;
   name: string;
   age: number;
-  email: string;
+  joinedInsurance: string;
+  summary: string;
 }
 
-// 사용자 데이터 배열 (-> API 요청으로 변경?)
-const rows: User[] = [
-  { id: 1, name: 'John Doe', age: 30, email: 'johndoe@example.com' },
-  { id: 2, name: 'Jane Doe', age: 25, email: 'janedoe@example.com' },
-  { id: 3, name: 'Ilmin Cho', age: 29, email: 'ilmincho@gmail.com' },
-];
+interface ApiResponse {
+  memberInfo: MemberInfo[];
+}
 
-// 컬럼
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'name',
-    headerName: 'Name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
-  },
-  {
-    field: 'email',
-    headerName: 'Email',
-    width: 200,
-    editable: true,
-  },
+  { field: 'memberId', headerName: 'ID', width: 90 },
+  { field: 'name', headerName: 'Name', width: 150 },
+  { field: 'age', headerName: 'Age', width: 110 },
+  { field: 'joinedInsurance', headerName: 'Joined Insurance', width: 180 },
+  { field: 'summary', headerName: 'Summary', width: 200, flex: 1 },
 ];
 
-export default function UserDataTable() {
+export default function MemberDataTable() {
+  const [memberData, setMemberData] = useState<MemberInfo[]>([]);
+
+  useEffect(() => {
+    axiosApi
+      .get<ApiResponse>('/consultings')
+      .then((response) => {
+        if (response && response.memberInfo) {
+          setMemberData(response.memberInfo);
+        } else {
+          console.error('Invalid response structure');
+          setMemberData([]);
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to fetch member data:', error);
+        setMemberData([]);
+      });
+  }, []);
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={memberData.map((info) => ({ ...info, id: info.memberId }))}
         columns={columns}
         initialState={{
           pagination: {
