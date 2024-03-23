@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { InputAdornment, TextField } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useChatLogStore from '@/store/common/chat';
+import { axiosApi } from '@/utils/axios';
 
 interface Props {
   inputText: string;
@@ -13,7 +14,7 @@ interface Props {
 const ChatInput: React.FC<Props> = ({ inputText, setInputText }) => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false);
 
-  const { addUserChat } = useChatLogStore();
+  const { addUserChat, addAIChat, chatLogModels } = useChatLogStore();
 
   useEffect(() => {
     if (inputText.trim().length > 0) {
@@ -27,14 +28,28 @@ const ChatInput: React.FC<Props> = ({ inputText, setInputText }) => {
     setInputText(event.currentTarget.value);
   };
 
-  const handleClickSend = () => {
+  const handleClickSend = async () => {
     addUserChat(inputText);
-    setInputText('');
+    await requestChatBot().finally(() => {
+      setInputText('');
+    });
+  };
+
+  const requestChatBot = async () => {
+    const history = chatLogModels.reduce((prev, curr) => {
+      return prev + `;${curr.speakerType}:${curr.text}`;
+    }, '');
+
+    const result = await axiosApi.post<{ history: string; question: string }, { answer: string }>(
+      '/chatbot',
+      { history, question: inputText },
+    );
+    addAIChat(result.answer);
   };
 
   return (
     <>
-      <Box paddingTop={4} sx={{ width: 1 }}>
+      <Box sx={{ width: 1 }}>
         <TextField
           multiline
           sx={{ width: 1 }}

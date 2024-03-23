@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import useChatLogStore from '@/store/common/chat';
 
@@ -16,11 +16,9 @@ interface Props {
 
 const PromptComponent: React.FC<Props> = ({ setInputText }) => {
   const { chatLogModels } = useChatLogStore();
-  const [, setSelectedIndex] = useState<number | null>(null);
 
   const handleSelect = (index: number, text: string) => {
     setInputText(text);
-    setSelectedIndex(index);
   };
 
   return (
@@ -48,13 +46,14 @@ const PromptComponent: React.FC<Props> = ({ setInputText }) => {
             {options.map((option, index) => (
               <Button
                 sx={{
-                  background: '#0090DA',
+                  // background: '#0090DA',
                   width: '200px',
                   height: '150px',
                   borderRadius: '16px',
                 }}
                 key={option.keyword}
-                variant={'contained'}
+                variant={'outlined'}
+                color="primary"
                 onClick={() => handleSelect(index, option.text)}
               >
                 <Typography textAlign="center">{option.keyword}</Typography>
