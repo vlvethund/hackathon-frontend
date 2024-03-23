@@ -14,22 +14,8 @@ const createInstance = (axiosConfig?: CreateAxiosDefaults) =>
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
     },
-    transformResponse: parseJson,
     ...axiosConfig,
   } as CreateAxiosDefaults);
-
-function parseJson(res: string): JSON | string {
-  let parsedData;
-
-  try {
-    parsedData = JSON.parse(res);
-  } catch (e) {
-    console.log('Error occurred when parsing response data. \n', e);
-    return res;
-  }
-
-  return parsedData;
-}
 
 class AxiosApi {
   private _config: CreateAxiosDefaults | undefined;
