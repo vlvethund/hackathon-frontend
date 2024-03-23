@@ -15,7 +15,6 @@ interface ApiResponse {
 }
 
 const columns: GridColDef[] = [
-  { field: 'memberId', headerName: 'ID', width: 90 },
   { field: 'name', headerName: 'Name', width: 150 },
   { field: 'age', headerName: 'Age', width: 110 },
   { field: 'joinedInsurance', headerName: 'Joined Insurance', width: 180 },
@@ -63,7 +62,6 @@ export default function MemberDataTable() {
           },
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
         disableRowSelectionOnClick
       />
     </div>
