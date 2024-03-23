@@ -32,10 +32,12 @@ export default function MemberDataTable() {
       .then((response) => {
         if (response.status === 200) {
           return response.data as ApiResponse;
+        } else {
+          throw Error();
         }
       })
       .then((res) => {
-        if (res) {
+        if (res.memberInfo) {
           setMemberData(res.memberInfo);
         } else {
           console.error('Invalid response structure');
