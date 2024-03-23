@@ -23,7 +23,7 @@ const ChatContainer: React.FC = () => {
       history: '',
       question: '',
     });
-    await alert(`상담사 ${result.consultationName} 님이 배정되었습니다.`);
+    await alert(`상담사 ${result.data.consultationName} 님이 배정되었습니다.`);
   };
 
   const noModels = useMemo(() => chatLogModels.length === 0, [chatLogModels]);

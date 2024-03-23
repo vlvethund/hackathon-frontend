@@ -44,7 +44,7 @@ const ChatInput: React.FC<Props> = ({ inputText, setInputText }) => {
       '/chatbot',
       { history, question: inputText },
     );
-    addAIChat(result.answer);
+    addAIChat(result.data.answer);
   };
 
   return (
