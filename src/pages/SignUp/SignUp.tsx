@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 type SignUpField = {
   name: string;
@@ -144,22 +144,24 @@ const SignUp = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <InputLabel id="joined-insurance-label">가입된 보험</InputLabel>
-              <Select
-                required
-                fullWidth
-                labelId="joined-insurance-label"
-                id="joined-insurance"
-                name="joined-insurance"
-                onChange={handleInsuranceChange}
-                value={field.joinedInsurance}
-                label="가입된 보험"
-              >
-                <MenuItem value={'insurance-none'}>없음</MenuItem>
-                <MenuItem value={'insurance-1'}>보험상품1</MenuItem>
-                <MenuItem value={'insurance-2'}>보험상품2</MenuItem>
-                <MenuItem value={'insurance-3'}>보험상품3</MenuItem>
-              </Select>
+              <FormControl fullWidth>
+                <InputLabel id="joined-insurance-label">가입된 보험</InputLabel>
+                <Select
+                  required
+                  fullWidth
+                  labelId="joined-insurance-label"
+                  id="joined-insurance"
+                  name="joined-insurance"
+                  onChange={handleInsuranceChange}
+                  value={field.joinedInsurance}
+                  label="가입된 보험"
+                >
+                  <MenuItem value={'insurance-none'}>없음</MenuItem>
+                  <MenuItem value={'insurance-1'}>보험상품1</MenuItem>
+                  <MenuItem value={'insurance-2'}>보험상품2</MenuItem>
+                  <MenuItem value={'insurance-3'}>보험상품3</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
