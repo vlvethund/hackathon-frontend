@@ -116,7 +116,7 @@ const Login = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
                 계정이 없으신가요? 회원가입하기
               </Link>
             </Grid>
