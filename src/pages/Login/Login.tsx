@@ -109,7 +109,15 @@ const Login = () => {
             fullWidth
             variant="contained"
             disabled={loginButtonDisabled}
-            sx={{ mt: 3, mb: 2 }}
+            sx={{
+              mt: 3,
+              mb: 2,
+              background: 'linear-gradient(90deg, #0090DA 30%, #A4CE4E 80%)',
+              '&.Mui-disabled': {
+                background: 'unset',
+                backgroundColor: 'rgba(0,0,0,0.12)',
+              },
+            }}
           >
             로그인
           </Button>
